@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitea
+  labels:
+    app: gitea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitea
+  template:
+    metadata:
+      labels:
+        app: gitea
+    spec:
+      containers:
+      - name: gitea
+        image: gitea/gitea
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GITEA__webhook__ALLOWED_HOST_LIST
+          value: "*"
+        volumeMounts:
+        - mountPath: /data
+          name: giteadir
+      volumes:
+      - name: giteadir
+        hostPath: #beware: works only in with single node
+          path: /data/gitea
+          type: DirectoryOrCreate

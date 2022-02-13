@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone
+  labels:
+    app: drone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drone
+  template:
+    metadata:
+      labels:
+        app: drone
+    spec:
+      containers:
+      - name: drone
+        image: drone/drone
+        ports:
+        - containerPort: 80
+        env:
+        - name: DRONE_GITEA_SERVER
+          value: "http://gitea"
+        - name: DRONE_GITEA_CLIENT_ID
+          value: "7968edca-6f50-4ee6-8dad-8c30aa7aa057"
+        - name: DRONE_GITEA_CLIENT_SECRET
+          value: "zW5HJR0zOmvJhe2lw1dOejbSzph0wZ9HkyEhVl9wnbv5"
+        - name: DRONE_RPC_SECRET
+          value: "49kd49fk487dk"
+        - name: DRONE_SERVER_HOST
+          value: "drone"
+        - name: DRONE_SERVER_PROTO
+          value: "http"
+        - name: DRONE_LOGS_DEBUG
+          value: "true"
+        volumeMounts:
+        - mountPath: /data
+          name: dronedir
+      volumes:
+        - name: dronedir
+          hostPath: #beware: works only in with single node
+            path: /data/drone
+            type: DirectoryOrCreate
