@@ -22,7 +22,7 @@ spec:
         - containerPort: 80
         env:
         - name: DRONE_GITEA_SERVER
-          value: "http://gitea"
+          value: "http://gitea" 
         - name: DRONE_GITEA_CLIENT_ID
           valueFrom: 
             secretKeyRef: 
@@ -44,6 +44,8 @@ spec:
           value: "http"
         - name: DRONE_LOGS_DEBUG
           value: "true"
+        - name: DRONE_LOGS_TRACE
+          value: "true" 
         volumeMounts:
         - mountPath: /data
           name: dronedir

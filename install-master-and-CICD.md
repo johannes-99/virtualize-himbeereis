@@ -62,7 +62,7 @@ if run for first time (no DB or volumes available):
  * Change Server-Domain to   gitea
  * change Gitea-Basis-URL to http://gitea/         (without port)
  * register user and setup new mirror (via migration) for repo https://github.com/johannes-99/nextcloud-service-python
- * create token for drone.io:  http://gitea/user/settings/applications (Name der Anwendung: drone, Weiterleitungs-URI: http://drone/login ) and provide credentials via drone container env variables (DRONE_GITEA_CLIENT_ID & DRONE_GITEA_CLIENT_SECRET )
+ * create token for drone.io:  http://gitea/user/settings/applications (Name der Anwendung: drone, Weiterleitungs-URI: http://drone/login ) and provide credentials via drone container env variables ( drone-secret-add-gitea-credentials.sh and make sure drone pod uses new env variables via exec "echo $DRONE_GITEA_CLIENT_ID" inside the pod   )
  * goto http://drone and do initial setup (redirects to gitea)
 
 
