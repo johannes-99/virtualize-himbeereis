@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: runner
+  namespace: ci-cd
   labels:
     app.kubernetes.io/name: runner
 spec:
@@ -25,4 +26,7 @@ spec:
         - name: DRONE_RPC_PROTO
           value: "http"
         - name: DRONE_RPC_SECRET
-          value: "49kd49fk487dk"
+          valueFrom: 
+            secretKeyRef: 
+              name: drone-rpc-secret
+              key: drone-rpc-secret 

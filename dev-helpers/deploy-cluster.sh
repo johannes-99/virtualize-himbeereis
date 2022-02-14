@@ -4,17 +4,18 @@ echo "lets clean up first:"
 # exec as root
 
 #k3s commands
-kubectl delete deployments --all --force
-kubectl delete services --all --force
-kubectl delete pods --all --force
-kubectl delete ing --all --force
-kubectl delete roles --all --force
-kubectl delete RoleBinding --all --force
-kubectl delete daemonset --all --force 
-
+kubectl delete deployments --all --force --namespace ci-cd
+kubectl delete services --all --force --namespace ci-cd
+kubectl delete pods --all --force --namespace ci-cd
+kubectl delete ing --all --force --namespace ci-cd
+kubectl delete roles --all --force --namespace ci-cd
+kubectl delete RoleBinding --all --force --namespace ci-cd
+kubectl delete daemonset --all --force  --namespace ci-cd
 
 
 echo "deploy the cluster:"
+
+kubectl apply -f ../cluster/namespaces.yaml
 
 
 kubectl create -f ../cluster/drone-deployment.yaml
@@ -31,6 +32,6 @@ kubectl apply -f ../cluster/kubernetes-dashboard.yaml
 kubectl create -f ../cluster/ingress.yaml
 
 
-watch kubectl get nodes,pods,svc,ing,services,deployments
+#watch kubectl get nodes,pods,svc,ing,services,deployments,secrets
 
 

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drone
+  namespace: ci-cd
   labels:
     app: drone
 spec:
@@ -23,11 +24,20 @@ spec:
         - name: DRONE_GITEA_SERVER
           value: "http://gitea"
         - name: DRONE_GITEA_CLIENT_ID
-          value: "7968edca-6f50-4ee6-8dad-8c30aa7aa057"
+          valueFrom: 
+            secretKeyRef: 
+              name: drone-gitea
+              key: drone-gitea-client-id
         - name: DRONE_GITEA_CLIENT_SECRET
-          value: "zW5HJR0zOmvJhe2lw1dOejbSzph0wZ9HkyEhVl9wnbv5"
+          valueFrom: 
+            secretKeyRef: 
+              name: drone-gitea
+              key: drone-gitea-client-secret
         - name: DRONE_RPC_SECRET
-          value: "49kd49fk487dk"
+          valueFrom: 
+            secretKeyRef: 
+              name: drone-rpc-secret
+              key: drone-rpc-secret
         - name: DRONE_SERVER_HOST
           value: "drone"
         - name: DRONE_SERVER_PROTO
