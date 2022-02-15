@@ -1,4 +1,4 @@
-kind: Role
+kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   namespace: ci-cd
@@ -25,7 +25,7 @@ rules:
   - update
 
 ---
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: runner
@@ -34,7 +34,10 @@ subjects:
 - kind: ServiceAccount
   name: default
   namespace: ci-cd
+- kind: ServiceAccount
+  name: default
+  namespace: default
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: runner
   apiGroup: rbac.authorization.k8s.io
