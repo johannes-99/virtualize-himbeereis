@@ -33,7 +33,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: default
+  namespace: ci-cd
 roleRef:
   kind: Role
   name: runner
