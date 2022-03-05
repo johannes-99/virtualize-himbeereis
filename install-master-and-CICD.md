@@ -39,20 +39,36 @@ kubectl get node
 
 **Prepare cluster deplyoment**
 
+# make sure kubectl is linked to k3s-master 
+kubectl cluster-info
+
+copy k3s-master:/etc/rancher/k3s/cat k3s.yaml to wsl2:/home/ubuntu/.kube/config 
+and change ip addr to k3s-master ip (e.g.:  server: https://127.0.0.1:6443 to  server: https://192.168.178.36:6443)
+
 ```
+
 git clone https://github.com/johannes-99/virtualize-himbeereis.git
 cd dev-helpers
 
+#these scripts can be executed on wsl2 or k3s-master:
 ./deploy-cluster.sh //will throw errors due to missing secrets
-
 ./drone-secret-add-gitea-credentials.sh
 ./drone-secret-create-rpc.sh
 
+
+#set fake hosts entry
 ./do-hosts-fake-dns.sh 
 # on windows do this manually in the hosts file:
 192.168.178.36 gitea drone myregistry #raspi 
 #OR 
 #172.30.0.2 gitea drone myregistry #wsl2
+
+```
+# argo setup
+
+``` 
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
 ```
 
 # gitea & drone setup 
